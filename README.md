@@ -50,7 +50,7 @@ vendo_relay->begin();
 vendo_led->begin();
 if (!_vendo_settings->begin()) DEBUGLN("loaded with default settings");
 vendo_screen->begin();
-
+attachInterrupt(digitalPinToInterrupt(COIN_SIGNAL_PIN), onCoin, FALLING);
 }
 
 void loop(){
