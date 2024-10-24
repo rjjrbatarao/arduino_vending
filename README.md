@@ -146,7 +146,7 @@ void loop() {
 - Timer class
 
 ## Want to Donate?
-- GCash 09970780423
+- GCash 09970780423 (Rolan Jay Batarao Jr.)
 
 ## License
 `
