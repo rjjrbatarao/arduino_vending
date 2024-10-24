@@ -8,62 +8,110 @@ Common c++ headers for building complex vending machines
 - Persistent Settings class
 - Global defines config
 
-## How to use
+## Example Usage
 ```c++
-// include all components
-#include <Arduino.h>
-#include "DEFINES.h"
-#include "SCREEN.h"
-#include "BUTTON.h"
-#include "BUZZER.h"
-#include "RELAY.h"
-#include "LED.h"
-#include "SETTINGS.h"
+/**
+   Created by rjjrbatarao
 
-#ifdef DBG
-#define DEBUGLN(x) Serial.println(x)
-#define DEBUG(x) Serial.print(x)
-#else
-#define DEBUGLN(x)
-#define DEBUG
-#endif
+   arduino vending code
+   added State machine class
+   example demostrates sub state
+*/
 
-// create object instances
-Button* vendo_button = new Button(BUTTON_PIN1, BUTTON_PULLUP, BUTTON_DISPENSE_DEBOUNCE);
-Buzzer* vendo_buzzer = new Buzzer(BUZZER_PIN, BUZZER_START, BUZZER_DURATION);
-Relay* vendo_relay = new Relay(RELAY_PIN1, RELAY_PIN2, COIN_RELAY_PIN);
-Settings* vendo_settings = new Settings();
-Screen* vendo_screen = new Screen();
-Led* vendo_led = new Led(LED_1, LED_INTERVAL);
+#include "Vendo.h"
 
-// interrupt pin callback
-static void onCoin() {
-  if (digitalRead(COIN_SIGNAL_PIN) == LOW) {
-    credit++;
-    coin_inserted = true;
-  }
+
+//using namespace Vendo;
+
+Vendo::State* state = new Vendo::State(3);// create 3 states
+Vendo::State* idle_state = new Vendo::State(2); // create 2 sub states
+Vendo::Button* button = new Vendo::Button(5); // button pin at pin 5
+Vendo::Credit* credit = new Vendo::Credit(13); // pin for coin acceptor
+Vendo::Screen* screen = new Vendo::Screen(33, 32); // sda on pin 33, scl on pin 32
+Vendo::Relay* coin_relay = new Vendo::Relay(12, HIGH); // relay pin at pin 12 ouput is logic low
+
+/*
+   The id are used to
+   jump between states
+*/
+
+enum {
+  IDLE_ID,
+  RUNNING_ID,
+  STOPPED_ID
+};
+
+enum {
+  SUB_IDLE_1_ID,
+  SUB_IDLE_2_ID
+};
+
+void subIdleOne() {
+  //Serial.println("sub idle 1");
+  idle_state->next();
 }
 
-void setup(){
-Serial.begin(9600);
-vendo_relay->begin();
-vendo_led->begin();
-if (!_vendo_settings->begin()) DEBUGLN("loaded with default settings");
-vendo_screen->begin();
-attachInterrupt(digitalPinToInterrupt(COIN_SIGNAL_PIN), onCoin, FALLING);
+void subIdleTwo() {
+  //Serial.println("sub idle 2");
+  idle_state->reset();
 }
 
-void loop(){
-vendo_buzzer->loop();
-vendo_led->loop();
-  if (vendo_button->check() == LOW) {
-    vendo_buzzer->beep();
-    vendo_relay->enableRelayCoin();
-    vendo_relay->enableRelay1();
-    vendo_relay->enableRelay2();
-    vendo_led->start();
-    //vendo_settings->store();
+void idleState() {
+  //Serial.println("idle");
+  if (button->check() == LOW) {
+    state->next();
   }
+  idle_state->loop();
+}
+
+void runningState() {
+  Serial.println("running");
+  state->set(STOPPED_ID);
+}
+
+void stoppedState() {
+  Serial.println("stopped");
+  idle_state->reset();
+}
+
+void creditCount(uint16_t total, uint16_t denominations) {
+  Serial.print("total: ");
+  Serial.print(total);// total
+  Serial.print(" denom: ");
+  Serial.println(denominations); // coin inserted
+}
+
+/**
+   Please do not change this is to avoid wrong credits
+*/
+void coinIsr() {
+  credit->credit_interrupt();
+}
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(115200);
+  state->add(&idleState, IDLE_ID);
+  state->add(&runningState, RUNNING_ID);
+  state->add(&stoppedState, STOPPED_ID);
+  idle_state->add(&subIdleOne, SUB_IDLE_1_ID);
+  idle_state->add(&subIdleTwo, SUB_IDLE_2_ID);
+
+  credit->attach(&creditCount);
+  attachInterrupt(13, coinIsr, FALLING); // only FALLING is allowed
+  credit->enable();
+  screen->begin();
+  screen->print(1, "Helmet vending");
+  coin_relay->begin();
+ 
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  state->loop();
+  credit->loop();
+  //delay(1000);
+
 }
 
 ```
