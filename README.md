@@ -141,6 +141,10 @@ void loop() {
 }
 
 ```
+
+## Todo
+- Timer class
+
 ## License
 `
 MIT License
