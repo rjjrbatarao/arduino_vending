@@ -35,6 +35,12 @@ automatically provided globally
    arduino vending code
    added State machine class
    example demostrates sub state
+
+   Note:
+   Upon testing enable the delay inside loop when enabling
+   the serial prints else it will flood the serial monitor.
+   For production use please disable any delay inside loop
+   for best performance.
 */
 
 #include "Vendo.h"
