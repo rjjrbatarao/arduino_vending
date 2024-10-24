@@ -40,7 +40,8 @@ automatically provided globally
    Upon testing enable the delay inside loop when enabling
    the serial prints else it will flood the serial monitor.
    For production use please disable any delay inside loop
-   for best performance.
+   for best performance, timers will be handled by the library
+   asynchronously
 */
 
 #include "Vendo.h"
