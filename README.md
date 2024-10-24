@@ -20,6 +20,7 @@ Common nonblocking c++ headers for building any complex vending machines. Ie. wi
 - Settings class (Persistent)
 - State Machine
 - Credit Handler
+- Timer class
 
 ## Installation
 ```
