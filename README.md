@@ -1,14 +1,32 @@
 # arduino_vending
-Common c++ headers for building complex vending machines
-## Components
+Common nonblocking c++ headers for building any complex vending machines.
+
+## Features v1.0.1
+- Nonblocking class components provided by single .h header
+- Minimal memory footprint
+- (New) State Machine class
+  - nestable non-blocking state machine
+- (New) Credit handler class
+  - handler for total credit and denomination detection
+- Has all you need for simple to complex vending machines
+
+## Class Components
 - Button class
 - Led class
 - Relay class
 - Screen i2c display class
-- Persistent Settings class
-- Global defines config
+- Settings class (Persistent)
+- State Machine
+- Credit Handler
 
-## Example Usage
+## Installation
+```
+Copy all of the files here alongside your .ino
+modify settings_t struct to your need and settings.xxxx will be 
+automatically provided globally
+```
+
+## Example Code Usage
 ```c++
 /**
    Created by rjjrbatarao
@@ -115,3 +133,7 @@ void loop() {
 }
 
 ```
+## License
+`
+MIT License
+`
