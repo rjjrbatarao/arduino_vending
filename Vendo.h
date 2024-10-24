@@ -1,14 +1,19 @@
 #ifndef __VENDING_H_
 #define __VENDING_H_
 /**
-   Created by: rjjrbatarao
-   Version: v1.0.1
-   Date: october 2024
-   
-   Details:
-   all classes uses minimal memory footprint to avoid
-   memory fragmentations
- */
+   Created by rjjrbatarao
+
+   arduino vending code
+   added State machine class
+   example demostrates sub state
+
+   Note:
+   Upon testing enable the delay inside loop when enabling
+   the serial prints else it will flood the serial monitor.
+   For production use please disable any delay inside loop
+   for best performance, events will be handled by the library
+   asynchronously
+*/
 
 #include <Wire.h>
 #include <EEPROM.h>
@@ -420,6 +425,50 @@ class Credit {
 
 };
 
+
+class Timer {
+  public:
+    Timer(uint16_t interval = 1000) {
+      _prev_time = 0;
+      _counting = false;
+      _interval = interval;
+    }
+    void on_start(TStateFunction func) {
+      _func_start = func;
+    }
+    void on_end(TStateFunction func) {
+      _func_stop = func;
+    }
+    void on_running(TStateFunction func) {
+      _func_running = func;
+    }
+    void start() {
+      _counting = true;
+      _prev_time = millis();
+      _func_start();
+    }
+    void stop() {
+      _counting = false;
+      _func_stop();
+    }
+
+    void loop() {
+      if (_counting == true) {
+        if (millis() - _prev_time > _interval) {
+          _prev_time = millis();
+          _func_running();
+        }
+      }
+    }
+  private:
+    TStateFunction _func_start;
+    TStateFunction _func_stop;
+    TStateFunction _func_running;
+    unsigned long _prev_time;
+    boolean _counting;
+    int16_t _interval;
+
+};
 
 }
 #endif
