@@ -145,7 +145,7 @@ void loop() {
 ## Todo
 - Timer class
 
-## Want to Donate?
+## Buy me a Coffee?
 - GCash 09970780423 (Rolan Jay Batarao Jr.)
 
 ## License
