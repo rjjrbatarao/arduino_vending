@@ -14,6 +14,7 @@ Common nonblocking c++ headers for building any complex vending machines.
 - Button class
 - Led class
 - Relay class
+- Buzzer class
 - Screen i2c display class
 - Settings class (Persistent)
 - State Machine
