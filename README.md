@@ -8,6 +8,7 @@ Common nonblocking c++ headers for building any complex vending machines. Ie. wi
   - nestable non-blocking state machine
 - (New) Credit handler class
   - handler for total credit and denomination detection
+- (New) Timer class
 - Has all you need for simple to complex vending machines
 
 ## Class Components
@@ -143,7 +144,7 @@ void loop() {
 ```
 
 ## Todo
-- Timer class
+- Add examples
 
 ## Buy me a Coffee?
 - GCash 09970780423 (Rolan Jay Batarao Jr.)
