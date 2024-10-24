@@ -145,6 +145,9 @@ void loop() {
 ## Todo
 - Timer class
 
+## Want to Donate?
+- GCash 09970780423
+
 ## License
 `
 MIT License
