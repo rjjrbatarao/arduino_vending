@@ -1,5 +1,5 @@
 # arduino_vending
-Common nonblocking c++ headers for building any complex vending machines. Ie. wifi, liquid, helmet etc vending machines.
+Opensource common nonblocking arduino library for building any complex vending machines. Ie. wifi, liquid, helmet etc vending machines.
 
 ## Features v1.0.1
 - Nonblocking class components provided by single .h header
