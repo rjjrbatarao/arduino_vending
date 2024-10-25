@@ -50,8 +50,6 @@
 namespace Vendo
 {
 
-//typedef std::function<void(uint16_t c_ount)> TTimerFunction;
-
 class Button {
   public:
     Button (uint8_t pin, bool pullup = false, uint32_t debounceDelay = 50)
