@@ -32,14 +32,14 @@ Opensource common nonblocking arduino library for building any complex vending m
 ```
 | MCU | #Working    | #Not Working    |
 | :---   | :---: | :---: |
-| ESP32 | ✓   | ✗   |
-| ESP8266 | ✓   | ✗   |
-| RP2040 | ✗   | ✗   |
-| Atmega328 | ✓   | ✗   |
-| Atmega168 | ✗   | ✗   |
-| Atmega1280 | ✗   | ✗   |
-| Atmega2560 | ✗   | ✗   |
-| STM32F103 | ✗   | ✗   |
+| ESP32 | :white_check_mark:   | :x:   |
+| ESP8266 | :white_check_mark:   | :x:   |
+| RP2040 | :x:   | :x:   |
+| Atmega328 | :white_check_mark:   | :x:   |
+| Atmega168 | :x:   | :x:   |
+| Atmega1280 | :x:   | :x:   |
+| Atmega2560 | :x:   | :x:   |
+| STM32F103 | :x:   | :x:   |
 
 ## Installation
 ```
@@ -166,6 +166,8 @@ void loop() {
 ## Todo
 - Add examples
 - Test on many mcu
+- update readme
+- add wiki
 
 ## Buy me a Coffee?
 - GCash 09970780423 (Rolan Jay Batarao Jr.)
