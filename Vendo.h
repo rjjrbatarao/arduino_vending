@@ -50,6 +50,8 @@
 namespace Vendo
 {
 
+//typedef std::function<void(uint16_t c_ount)> TTimerFunction;
+
 class Button {
   public:
     Button (uint8_t pin, bool pullup = false, uint32_t debounceDelay = 50)
@@ -119,10 +121,14 @@ class Screen {
       // on destroy or delete
     }
     void begin() {
-      if(LCD_SDA == _SDA && LCD_SCL == _SCL){
+      if (LCD_SDA == _SDA && LCD_SCL == _SCL) {
         Wire.begin();
       } else {
+#if defined(ESP32) || defined(ESP8266) || defined(ARDUINO_RASPBERRY_PI_PICO_W)
         Wire.begin(_SDA, _SCL);
+#else
+        Wire.begin();
+#endif
       }
       lcd->begin(20, 4);
       lcd->backlight();
@@ -147,12 +153,12 @@ class Screen {
 };
 
 /**
- * This is a minimal implementation of how to 
- * store and retrieve settings
- * please modify the settings_t struct to hold more 
- * variables
- */
- 
+   This is a minimal implementation of how to
+   store and retrieve settings
+   please modify the settings_t struct to hold more
+   variables
+*/
+
 struct settings_t {
   float time_coinslot = 1.2; // example in seconds
   float credits_minutes = 5; // example in minutes
@@ -191,8 +197,8 @@ class Settings {
     boolean begin() {
       return load();
     }
-    
-    settings_t settings;// public settings 
+
+    settings_t settings;// public settings
 
   private:
 
@@ -433,39 +439,47 @@ class Timer {
       _counting = false;
       _interval = interval;
     }
-    void on_start(TStateFunction func) {
+    void on_start(void(*func)(void)) {
       _func_start = func;
     }
-    void on_end(TStateFunction func) {
+    void on_end(void(*func)(void)) {
       _func_stop = func;
     }
-    void on_running(TStateFunction func) {
+    void on_running(void(*func)(uint16_t c_ount)) {
       _func_running = func;
     }
     void start() {
       _counting = true;
       _prev_time = millis();
       _func_start();
+      _count = 0;
     }
     void stop() {
       _counting = false;
       _func_stop();
+      _count = 0;
     }
-
+    void reset() {
+      _count = 0;
+    }
     void loop() {
       if (_counting == true) {
         if (millis() - _prev_time > _interval) {
           _prev_time = millis();
-          _func_running();
+          _func_running(_count++);
         }
       }
     }
   private:
-    TStateFunction _func_start;
-    TStateFunction _func_stop;
-    TStateFunction _func_running;
+    typedef void(*func_none_ptr)(void);
+    typedef void(*func_one_ptr)(uint16_t c_ount);
+
+    func_none_ptr _func_start;
+    func_none_ptr _func_stop;
+    func_one_ptr _func_running;
     unsigned long _prev_time;
     boolean _counting;
+    uint16_t _count;
     int16_t _interval;
 
 };
