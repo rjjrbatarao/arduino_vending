@@ -37,6 +37,7 @@ x|x - not working
 | RP2040 | :x:   | :x:   |
 | Atmega328 | :white_check_mark:   | :x:   |
 | Atmega168 | :x:   | :x:   |
+| Atmega32u4 | :x:   | :x:   |
 | Atmega1280 | :x:   | :x:   |
 | Atmega2560 | :white_check_mark:   | :x:   |
 | STM32F103 | :x:   | :x:   |
