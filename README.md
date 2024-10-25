@@ -1,5 +1,5 @@
 # arduino_vending
-Opensource common nonblocking arduino library for building any complex vending machines. Ie. wifi, liquid, helmet etc vending machines.
+Opensource common nonblocking arduino library for building any complex vending machines. Ie. wifi, liquid, helmet, Coffee etc. vending machines.
 
 
 
