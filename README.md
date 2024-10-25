@@ -26,9 +26,9 @@ Opensource common nonblocking arduino library for building any complex vending m
 
 ## Tested microcontrollers
 ```
-✗|✗ - Untested
-✓|✗ - Working
-✗|✓ - not working
+:x:|:x: - Untested
+:white_check_mark:|:x: - Working
+:x:|:white_check_mark: - not working
 ```
 | MCU | #Working    | #Not Working    |
 | :---   | :---: | :---: |
