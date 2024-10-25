@@ -1,6 +1,8 @@
 # arduino_vending
 Opensource common nonblocking arduino library for building any complex vending machines. Ie. wifi, liquid, helmet etc vending machines.
 
+
+
 ## Features v1.0.1
 - Nonblocking class components provided by single .h header
 - Minimal memory footprint
@@ -21,6 +23,23 @@ Opensource common nonblocking arduino library for building any complex vending m
 - State Machine
 - Credit Handler
 - Timer class
+
+## Tested microcontrollers
+```
+✗|✗ - Untested
+✓|✗ - Working
+✗|✓ - not working
+```
+| MCU | #Working    | #Not Working    |
+| :---   | :---: | :---: |
+| ESP32 | ✓   | ✗   |
+| ESP8266 | ✓   | ✗   |
+| RP2040 | ✗   | ✗   |
+| Atmega328 | ✓   | ✗   |
+| Atmega168 | ✗   | ✗   |
+| Atmega1280 | ✗   | ✗   |
+| Atmega2560 | ✗   | ✗   |
+| STM32F103 | ✗   | ✗   |
 
 ## Installation
 ```
@@ -146,6 +165,7 @@ void loop() {
 
 ## Todo
 - Add examples
+- Test on many mcu
 
 ## Buy me a Coffee?
 - GCash 09970780423 (Rolan Jay Batarao Jr.)
