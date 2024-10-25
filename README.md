@@ -38,7 +38,7 @@ Opensource common nonblocking arduino library for building any complex vending m
 | Atmega328 | :white_check_mark:   | :x:   |
 | Atmega168 | :x:   | :x:   |
 | Atmega1280 | :x:   | :x:   |
-| Atmega2560 | :x:   | :x:   |
+| Atmega2560 | :white_check_mark:   | :x:   |
 | STM32F103 | :x:   | :x:   |
 
 ## Installation
