@@ -28,9 +28,15 @@
 #define DEBUG
 #endif
 
+
+#ifdef ESP8266
+#define CALLBACK_STD_FUNCTION
+#endif
+
 #if defined(ESP32)
 #define LCD_SDA 21
 #define LCD_SCL 22
+#include <functional>
 
 #elif defined(ESP8266) || defined(ARDUINO_RASPBERRY_PI_PICO_W) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega168__)
 #define LCD_SDA 4
@@ -49,6 +55,8 @@
 
 namespace Vendo
 {
+
+//typedef std::function<void(uint16_t c_ount)> TTimerFunction;
 
 class Button {
   public:
@@ -173,13 +181,16 @@ class Settings {
     }
     void store() {
       EEPROM.put(0, settings);
+      EEPROM.commit();
     }
     boolean factory() {
       settings_t factory_settings;
       EEPROM.put(0, factory_settings);
+      EEPROM.commit();
       return true;
     }
     boolean load() {
+      EEPROM.begin(512);
       EEPROM.get(0, settings);
       /*
          add checks settings if default or not
@@ -188,6 +199,7 @@ class Settings {
         settings_t default_settings;
         settings = default_settings;
         EEPROM.put(0, default_settings);
+        EEPROM.commit();
         return false;
       }
       return true;
